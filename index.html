@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="text/html;utf-8" content="Content-Type" />
+    <title>js游戏开发人物走动</title>
+    <link rel="stylesheet" href="css/game.css" media="all" />
+</head>
+<body>
+    <script type="text/javascript" src="js/jquery.1.9.1.js"></script>
+    <script type="text/javascript">
+        function CreateHtml(tag, cname) {
+            var elm = document.createElement(tag);
+            elm.className = cname;
+            document.body.appendChild(elm);
+            return elm;
+        }
+        function Move(x, y) {
+            this.Main = null;
+            this.Div = CreateHtml("div", "p");
+            this.x = x ? x : 0;
+            this.y = y ? y : 0;
+            this.Show = function () {
+                this.Div.style.left = this.x * 20 + "px";
+                this.Div.style.top = this.y * 20 + "px";
+            }
+            this.yMove = function (step) {
+                if (this.Main.CheckMove(this.x, this.y - -step) && this.Main.Check(this.x, this.y - -step)) {
+                    this.y -= -step;
+                    this.Show();
+                }
+            }
+            this.xMove = function (step) {
+                if (this.Main.CheckMove(this.x - -step, this.y) && this.Main.Check(this.x - -step, this.y)) {
+                    this.x -= -step;
+                    this.Show();
+                }
+            }
+            this.Show();
+        }
+        function Main(w, h) {
+            this.width = w ? w : 20;
+            this.height = h ? h : 20;
+            var m = CreateHtml("div", "m");
+            m.style.width = this.width * 20 + "px";
+            m.style.height = this.height * 20 + "px";
+            this.CheckMove = function (x, y) {
+                if (x >= this.width || x < 0) {
+                    return false;
+                }
+                else if (y >= this.height || y < 0) {
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+            this.Check = function (x, y) {
+                var check = true;
+                for (var i in this.Randoms) {
+                    if (Math.abs(this.Randoms[i].x - x) == 0 && this.Randoms[i].y == y) {
+                        check = false;
+                    }
+                    else if (Math.abs(this.Randoms[i].y - y) == 0 && this.Randoms[i].x == x) {
+                        check = false;
+                    }
+                    if (!check) {
+                        return false;
+                    }
+                }
+                return check;
+            }
+            this.Randoms = [];
+            this.Random = function (num) {
+                for (var i = 0; i < num; i++) {
+                    var x = Math.floor(Math.random() * (this.width - 0.00001));
+                    var y = Math.floor(Math.random() * (this.width - 0.00001));
+                    var r = CreateHtml("div", "r");
+                    r.style.left = x * 20 + "px";
+                    r.style.top = y * 20 + "px";
+                    var xy = { x: x, y: y };
+                    this.Randoms.push(xy);
+                }
+            }
+        }
+        var m = new Main();
+        m.Random(150);
+        var move = new Move();
+        move.Main = m;
+        document.onkeydown = function (e) {
+            switch (e.keyCode) {
+                case 38: //up
+                    move.yMove(-1);
+                    break;
+                case 40: //down
+                    move.yMove(1);
+                    break;
+                case 37: //left
+                    move.xMove(-1);
+                    break;
+                case 39: //right
+                    move.xMove(1);
+                    break;
+            }
+        }
+    </script>
+</body>
+</html>
