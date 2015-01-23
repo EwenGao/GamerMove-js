@@ -1,0 +1,42 @@
+body {
+    padding: 0;
+    margin: 0;
+}
+
+.people {
+    width: 40px;
+    height: 50px;
+    background: url(../images/people.png);
+    background-position: 0 0;
+    position: absolute;
+    left: 50px;
+}
+.river {
+    background: #0094ff;
+    height: 600px;
+    width: 30px;
+}
+.ludi {
+    background: #f7cc55;
+    width: 600px;
+    height: 600px;
+    position: absolute;
+    z-index: -2;
+}
+.p {
+    background: #0094ff;
+    width: 19px;
+    height: 19px;
+    margin: 1px;
+    position: absolute;
+}
+.m {
+    background: #f7cc55;
+}
+.r {
+     background: #d18306;
+    width: 19px;
+    height: 19px;
+    margin: 1px;
+    position: absolute;
+}
